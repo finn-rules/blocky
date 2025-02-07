@@ -4,13 +4,13 @@ _(Gamewerks corporation internal code—do not share!)_
 
 ## Credits
 
-Primary developer: _(TODO: fill me in)_
+Primary developer: Finn Rowles
 
 ### Resources Used
 
-+ _(TODO: fill me in)_
-+ ...
-+ ...
++ Professor Osera's Instructions for Project 3
++ Java Version 17.0.14
++ Professor Osera's Textbook
 
 ## Changelog
 
