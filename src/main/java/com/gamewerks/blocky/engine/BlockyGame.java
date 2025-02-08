@@ -19,9 +19,9 @@ public class BlockyGame {
         trySpawnBlock();
     }
     
-    private void trySpawnBlock() {
+private void trySpawnBlock() {
         if (activePiece == null) {
-            activePiece = new Piece(PieceKind.I, new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
+            activePiece = new Piece(PieceKind.I, new Position(0, Constants.BOARD_WIDTH / 2 - 2));
             if (board.collides(activePiece)) {
                 System.exit(0);
             }
@@ -39,6 +39,7 @@ public class BlockyGame {
             break;
         case RIGHT:
             nextPos = activePiece.getPosition().add(0, 1);
+            break;
         default:
             throw new IllegalStateException("Unrecognized direction: " + movement.name());
         }
@@ -48,7 +49,7 @@ public class BlockyGame {
     }
     
     private void processGravity() {
-        Position nextPos = activePiece.getPosition().add(-1, 0);
+        Position nextPos = activePiece.getPosition().add(1, 0);
         if (!board.collides(activePiece.getLayout(), nextPos)) {
             lockCounter = 0;
             activePiece.moveTo(nextPos);
@@ -58,6 +59,7 @@ public class BlockyGame {
             } else {
                 board.addToWell(activePiece);
                 lockCounter = 0;
+                System.out.println("Attempted to place block.");
                 activePiece = null;
             }
         }
@@ -69,6 +71,7 @@ public class BlockyGame {
     
     public void step() {
         trySpawnBlock();
+        processMovement();
         processGravity();
         processClearedLines();
     }
@@ -81,3 +84,4 @@ public class BlockyGame {
     public void setDirection(Direction movement) { this.movement = movement; }
     public void rotatePiece(boolean dir) { activePiece.rotate(dir); }
 }
+
