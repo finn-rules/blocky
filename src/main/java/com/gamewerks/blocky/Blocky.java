@@ -26,24 +26,26 @@ public class Blocky {
         frame.pack();
         frame.setVisible(true);
         
-        frame.addKeyListener(new KeyAdapter() {
+         frame.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent e) {
                 int code = e.getKeyCode();
-                if (code == e.VK_LEFT) {
+                if (KeyEvent.VK_LEFT == code) {
                     game.setDirection(Direction.LEFT);
-                } else if (code == e.VK_RIGHT) {
+                } else if (code == KeyEvent.VK_RIGHT) {
                     game.setDirection(Direction.RIGHT);
                 }
             }
             
+            @Override
             public void keyReleased(KeyEvent e) {
                 int code = e.getKeyCode();
-                if (code == e.VK_LEFT || code == e.VK_RIGHT) {
-                    game.setDirection(Direction.NONE);
-                } else if (code == e.VK_Z) {
-                    game.rotatePiece(false);
-                } else if (code == e.VK_X) {
-                    game.rotatePiece(true);
+                switch (code) {
+                    case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> game.setDirection(Direction.NONE);
+                    case KeyEvent.VK_Z -> game.rotatePiece(false);
+                    case KeyEvent.VK_X -> game.rotatePiece(true);
+                    default -> {
+                    }
                 }
             }
         });
