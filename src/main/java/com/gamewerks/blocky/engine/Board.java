@@ -23,7 +23,7 @@ public class Board {
     
     public boolean collides(boolean[][] layout, Position pos) {
         for (int row = 0; row < layout.length; row++) {
-            int wellRow = pos.row - row;
+            int wellRow = pos.row + row;
             for (int col = 0; col < layout[row].length; col++) {
                 int wellCol = col + pos.col;
                 if (layout[row][col]) {
@@ -42,7 +42,7 @@ public class Board {
         boolean[][] layout = p.getLayout();
         Position pos = p.getPosition();
         for (int row = 0; row < layout.length; row++) {
-            int wellRow = pos.row - row;
+            int wellRow = pos.row + row;
             for (int col = 0; col < layout[row].length; col++) {
                 int wellCol = pos.col + col;
                 if (isValidPosition(wellRow, wellCol) && layout[row][col]) {
@@ -53,20 +53,22 @@ public class Board {
     }
     
     public void deleteRow(int n) {
-        for (int row = 0; row < n - 1; row++) {
-            for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
-                well[row][col] = well[row+1][col];
-            }
-        }
         for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
             well[n][col] = false;
         }
+        for (int row = n - 1; row >= 0; row--) {
+            for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
+                well[row + 1][col] = well[row][col];
+            }
+        }
     }
     
+    // incorrect casting, did not delete the correct row
+    // the linked list is the list of all rows??
     public void deleteRows(List rows) {
         for (int i = 0; i < rows.size(); i++) {
-            int row = (Integer) rows.get(i);
-            deleteRow(row);
+            int row = (int)rows.get(i);
+            deleteRow(row + i);
         }
     }
     
@@ -82,7 +84,7 @@ public class Board {
         List completedRows = new LinkedList();
         for (int row = 0; row < Constants.BOARD_HEIGHT; row++) {
             if (isCompletedRow(row)) {
-                completedRows.add(well[row]);
+                completedRows.add(row); /// ??? why well?
             }
         }
         return completedRows;
