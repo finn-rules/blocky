@@ -7,19 +7,7 @@ import java.util.Scanner;
 
 import com.gamewerks.blocky.engine.PieceKind;
 
-public class Loader {
-    private static boolean[][] readRotation(Scanner in) {
-        boolean[][] rotation = new boolean[4][4];
-        for (int row = 3; row >= 0; row--) {
-            String line = in.nextLine();
-            for (int col = 0; col < 5; col++) {
-                rotation[row][col] = line.charAt(col) == 'x';
-            }
-        }
-        return rotation;
-    }
-    
-    
+public class Loader { 
     public static boolean[][][] loadRotationData(PieceKind piece) throws IOException {
         boolean[][][] data = new boolean[4][][];
         File file = new File(Constants.DATA_PATH, piece.toString() + ".data");
